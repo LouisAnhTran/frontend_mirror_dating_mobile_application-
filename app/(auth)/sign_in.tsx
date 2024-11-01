@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   SafeAreaView,
   ScrollView,
@@ -16,28 +17,50 @@ import { TextInput } from "react-native";
 
 import { icons } from "../../constants";
 import { images } from "../../constants";
-import { useGetTestQuery } from "@/features/api/apiSlice";
+import { useGetTestQuery, useUserLoginMutation } from "@/features/api/apiSlice";
 
 const SignIn = () => {
-  const showToast = () => {
-    Toast.show({
-      type: "success",
-      text1: "Hello",
-      text2: "This is some something 👋",
-    });
-  };
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { data, isLoading, isFetching, isError } = useGetTestQuery(undefined);
-
-  console.log("this is sign in");
-  console.log("data: ", data);
+  console.log("username: ", username);
+  console.log("password: ", password);
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const [userLogin, { isLoading, isError, isSuccess, data }] =
+    useUserLoginMutation();
 
+  const handleSignIn = async () => {
+    try {
+      console.log("inside handle press");
+      const response = await userLogin({
+        username: username,
+        password: password,
+      }).unwrap();
+
+      console.log("response: ", response);
+
+      router.push("./add_more_details");
+
+      Toast.show({
+        type: "success",
+        text1: "Notification",
+        text2: "User signed in successfully",
+      });
+    } catch (error: any) {
+      console.log("handle press error ", error);
+
+      Toast.show({
+        type: "error",
+        text1: "Notification",
+        text2: error.data.detail,
+      });
+    }
+  };
 
   return (
-    <SafeAreaView className="bg-userAuth h-screen">
+    <SafeAreaView className="bg-userAuth h-screen relative">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View>
           <View className="flex flex-row justify-center items-center h-16 mt-12">
@@ -58,6 +81,8 @@ const SignIn = () => {
             <View className="rounded-xl w-full h-12 bg-white focus:border-2 focus:border-gray-400 flex flex-row">
               <TextInput
                 className="flex-1 text-black-200 font-pregular pl-4"
+                value={username}
+                onChangeText={setUsername}
                 placeholder="Phone, Email or Username"
                 placeholderTextColor={"#bdc3c7"}
               ></TextInput>
@@ -68,6 +93,8 @@ const SignIn = () => {
               <View className="rounded-xl w-full h-12 bg-white focus:border-2 focus:border-gray-400 flex flex-row items-center justify-center">
                 <TextInput
                   className="flex-1 text-black-200 font-pregular pl-4"
+                  value={password}
+                  onChangeText={setPassword}
                   placeholder="Password"
                   placeholderTextColor={"#bdc3c7"}
                   secureTextEntry={showPassword}
@@ -95,7 +122,12 @@ const SignIn = () => {
 
         {/* Sign button and below */}
         <View className="mt-32 px-8">
-          <TouchableOpacity activeOpacity={0.7} className="bg-black-200 shadow-md h-12 rounded-xl flex flex-col items-center justify-center">
+          <TouchableOpacity
+            onPress={handleSignIn}
+            disabled={isLoading}
+            activeOpacity={0.7}
+            className="bg-black-200 shadow-md h-12 rounded-xl flex flex-col items-center justify-center"
+          >
             <Text className="text-white font-pregular text-sm">Sign In</Text>
           </TouchableOpacity>
 
@@ -127,8 +159,9 @@ const SignIn = () => {
 
           <TouchableOpacity
             activeOpacity={0.7}
+            disabled={isLoading}
             className="mt-8 bg-userAuthSignup h-[114px] rounded-xl"
-            onPress={()=>router.push("./phone_number")}
+            onPress={() => router.push("./phone_number")}
           >
             <View className="flex flex-row items-center justify-center">
               <View className="mt-4 w-[87px] h-[8px] bg-userAuthSignupBar rounded-lg"></View>
@@ -146,6 +179,23 @@ const SignIn = () => {
             </View>
           </TouchableOpacity>
         </View>
+
+        {isLoading && (
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              justifyContent: "center",
+              alignItems: "center",
+              // backgroundColor: "rgba(128, 128, 128, 0.5)", // gray with 50% opacity
+            }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

@@ -50,9 +50,16 @@ export const apiSlice = createApi({
       // The URL for the request is '/fakeApi/posts'
       query: () => "/posts",
     }),
-    addUser: builder.mutation({
+    userSignup: builder.mutation({
       query: (userData) => ({
-        url: "/user_signup",
+        url: "/auth/user_signup",
+        method: "POST",
+        body: userData,
+      }),
+    }),
+    userLogin: builder.mutation({
+      query: (userData) => ({
+        url: "/auth/login",
         method: "POST",
         body: userData,
       }),
@@ -150,7 +157,7 @@ export const apiSlice = createApi({
 // Export the auto-generated hook for the `getPosts` query endpoint
 export const {
   useGetPostsQuery,
-  useAddUserMutation,
+  useUserSignupMutation,
   useLoginMutation,
   useUploadFileMutation,
   useFetchMessagesQuery,
@@ -163,5 +170,6 @@ export const {
   useGetAiToolsForAllCategoryQuery,
   useGetTestQuery,
   useGenerateOTPMutation,
-  useVerifyOTPMutation
+  useVerifyOTPMutation,
+  useUserLoginMutation
 } = apiSlice;

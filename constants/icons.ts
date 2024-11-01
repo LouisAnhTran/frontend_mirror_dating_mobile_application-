@@ -16,6 +16,8 @@ import google from "../assets/icons/google_1.png";
 import apple from "../assets/icons/apple_1.png";
 import phone from "../assets/icons/phone_3.png";
 import security from "../assets/icons/security.png"
+import birthday from "../assets/icons/birthday.png"
+import arrowsim from "../assets/icons/arrow_simple.png"
 
 export default {
   play,
@@ -35,5 +37,7 @@ export default {
   google,
   apple,
   phone,
-  security
+  security,
+  birthday,
+  arrowsim
 };

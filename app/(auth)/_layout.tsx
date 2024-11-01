@@ -42,6 +42,24 @@ const _layout = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="add_more_details"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="add_user_name"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="add_password"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

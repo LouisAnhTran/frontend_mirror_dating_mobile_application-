@@ -4,33 +4,33 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { Button, Platform } from "react-native";
-import DatePicker from "react-native-date-picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { icons } from "../../constants";
-import { useDispatch } from "react-redux";
-import { populateBirthday } from "@/features/user/userSlice";
+import Toast from "react-native-toast-message";
 import { router } from "expo-router";
+import { useDispatch } from "react-redux";
+import { populateUsername } from "@/features/user/userSlice";
 
-const BirthDay = () => {
-  const [date, setDate] = useState(new Date());
-  const disPatch=useDispatch()
+const add_user_name = () => {
+    const dispatch=useDispatch()
+  const [userName, setUserName] = useState(""); // State to store the user name
 
-  const onChange = (event: any, selectedDate: any) => {
-    const currentDate = selectedDate || date;
-    setDate(currentDate);
-  };
-
-  console.log("date: ", date.toLocaleDateString());
-
-  const handlePress=() =>{
-    disPatch(populateBirthday(date.toLocaleDateString()))
-    router.push("./add_user_name")
+  const handlePress=()=>{
+    if(!userName) {
+        Toast.show({
+            type: "error",
+            text1: "Notification",
+            text2: "user name can not be empty",
+          });
+    }else {
+        dispatch(populateUsername(userName))
+        router.push("./add_password")
+    }
   }
 
   return (
@@ -60,7 +60,7 @@ const BirthDay = () => {
                 className="w-[40px] h-[40px]"
               ></Image>
               <Text className="font-pbold text-lg pl-2">
-                What's your date of birth ?
+                Add your user name
               </Text>
             </View>
 
@@ -77,16 +77,16 @@ const BirthDay = () => {
             </TouchableOpacity>
           </View>
 
-          <View className="mt-4">
-            {true && (
-              <DateTimePicker
-                value={date}
-                mode="date"
-                is24Hour={true}
-                display={Platform.OS === "ios" ? "spinner" : "default"}
-                onChange={onChange}
-              />
-            )}
+          <View className="mt-4 p-4">
+            <TextInput
+              value={userName}
+              onChangeText={setUserName}
+              placeholder="username"
+              className="border-b border-gray-300 p-2 w-full text-lg" // Tailwind classes for bottom border
+              style={{
+                height: 40, // Optional: set the height for the TextInput
+              }}
+            />
           </View>
         </View>
       </ScrollView>
@@ -94,4 +94,6 @@ const BirthDay = () => {
   );
 };
 
-export default BirthDay;
+export default add_user_name;
+
+const styles = StyleSheet.create({});
