@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,6 +18,8 @@ const index = () => {
             resizeMode="contain"
           ></Image>
           <Text className="font-psemibold text-white text-4xl">Mirror</Text>
+
+          <TouchableOpacity onPress={()=>router.push("./sign_in")} ><Text>Sign in</Text></TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
