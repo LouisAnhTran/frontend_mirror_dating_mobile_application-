@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Stack } from 'expo-router'
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Stack } from "expo-router";
 
 const _layout = () => {
   return (
@@ -24,17 +24,29 @@ const _layout = () => {
             headerShown: false,
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="otp_input"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="welcome_screen"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="birth_day"
           options={{
             headerShown: false,
           }}
         />
       </Stack>
     </>
-  )
-}
+  );
+};
 
-export default _layout
+export default _layout;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

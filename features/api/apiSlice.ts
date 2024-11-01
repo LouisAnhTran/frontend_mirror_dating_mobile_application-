@@ -64,7 +64,13 @@ export const apiSlice = createApi({
         method: "POST",
         body: userData,
       }),
-      invalidatesTags: ["Post"],
+    }),
+    verifyOTP: builder.mutation({
+      query: (userData) => ({
+        url: "/auth/verify-otp",
+        method: "POST",
+        body: userData,
+      }),
     }),
     getUserOnboardingStatus: builder.query({
       query: (email_address) =>
@@ -156,5 +162,6 @@ export const {
   useOnboardNewUserMutation,
   useGetAiToolsForAllCategoryQuery,
   useGetTestQuery,
-  useGenerateOTPMutation
+  useGenerateOTPMutation,
+  useVerifyOTPMutation
 } = apiSlice;

@@ -11,11 +11,11 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
-import facebook from "../assets/icons/image_copy.png"
-import google from "../assets/icons/google_1.png"
-import apple from "../assets/icons/apple_1.png"
-import phone from "../assets/icons/phone_3.png"
-
+import facebook from "../assets/icons/image_copy.png";
+import google from "../assets/icons/google_1.png";
+import apple from "../assets/icons/apple_1.png";
+import phone from "../assets/icons/phone_3.png";
+import security from "../assets/icons/security.png"
 
 export default {
   play,
@@ -34,5 +34,6 @@ export default {
   facebook,
   google,
   apple,
-  phone
+  phone,
+  security
 };

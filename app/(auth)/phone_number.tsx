@@ -17,17 +17,20 @@ import Toast from "react-native-toast-message";
 import { icons } from "../../constants";
 import { useGenerateOTPMutation } from "@/features/api/apiSlice";
 import { router } from "expo-router";
+import { useDispatch } from "react-redux";
+import { populateUserPhoneNumber } from "@/features/user/userSlice";
 
 const PhoneNumber = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const phoneInput = React.useRef(null);
+  const dispatch=useDispatch()
 
-  const [verifyOtp, { isLoading, isError, isSuccess, data }] =
+  const [generateOtp, { isLoading, isError, isSuccess, data }] =
     useGenerateOTPMutation();
 
   const handlePress = async () => {
     try {
-      const response = await verifyOtp({ phone_number: phoneNumber }).unwrap();
+      const response = await generateOtp({ phone_number: phoneNumber }).unwrap();
 
       console.log("response: ", response);
 
@@ -36,6 +39,8 @@ const PhoneNumber = () => {
         text1: "Notification",
         text2: response.status,
       });
+
+      dispatch(populateUserPhoneNumber(phoneNumber))
 
       router.push('./otp_input')
     } catch (error: any) {
